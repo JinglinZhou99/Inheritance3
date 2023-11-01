@@ -3,7 +3,7 @@ import java.util.List;
 
 public class WheelOfFortuneAIGame extends WheelOfFortune {
     private List<WheelOfFortunePlayer> players = new ArrayList<>();
-    private int playerIndex = 0;
+    private int playerIndex =  0;
 
     public WheelOfFortuneAIGame() {
         this.players.add(new AlphabetAIPlayer());
