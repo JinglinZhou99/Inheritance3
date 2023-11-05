@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * A concrete implementation of WheelOfFortune for user gameplay.
+ */
 public class WheelOfFortuneUserGame extends WheelOfFortune {
 
     @Override
@@ -29,6 +32,11 @@ public class WheelOfFortuneUserGame extends WheelOfFortune {
             }
             return answer == 1;
         } else return false;
+    }
+
+    @Override
+    public String toString() {
+        return "WheelOfFortuneUserGame{}";
     }
 
     public static void main(String[] args) {

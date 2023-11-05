@@ -2,9 +2,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-
+/**
+ * This abstract class serves as the base class for the Wheel of Fortune game.
+ */
 public abstract class WheelOfFortune extends Game {
     protected List<String> phraseList ;
     private StringBuilder hidden;
@@ -13,12 +16,20 @@ public abstract class WheelOfFortune extends Game {
     protected int totalChances = 26;
     private String currentPhrase;
 
+    /**
+     * Constructor for the WheelOfFortune class.
+     * Initializes the phrase list and other game-related variables.
+     */
     public WheelOfFortune() {
         phraseList = readPhrases();
         previousGuesses = "";
         chance = 0;
     }
 
+    /**
+     * Reads a list of phrases from a file.
+     * @return A list of phrases.
+     */
     public List<String> readPhrases() {
         try {
             return Files.readAllLines(Paths.get("phrases.txt"));
@@ -28,6 +39,10 @@ public abstract class WheelOfFortune extends Game {
         }
     }
 
+    /**
+     * Selects a random phrase from the phrase list.
+     * @return The selected phrase in lowercase.
+     */
     public String randomPhrase() {
         Random rand = new Random();
         int index = rand.nextInt(phraseList.size());
@@ -35,6 +50,9 @@ public abstract class WheelOfFortune extends Game {
         return currentPhrase.toLowerCase();
     }
 
+    /**
+     * Initializes the hidden phrase with asterisks.
+     */
     public void getHiddenPhrase() {
         hidden = new StringBuilder(currentPhrase);
         for (int index = 0; index < currentPhrase.length(); index++) {
@@ -44,6 +62,11 @@ public abstract class WheelOfFortune extends Game {
         }
     }
 
+    /**
+     * Process a player's guess.
+     * @param playId The ID of the player.
+     * @return A GameRecord representing the result of the gameplay.
+     */
     public GameRecord processGuess(String playId) {
         currentPhrase = randomPhrase();
         getHiddenPhrase();
@@ -109,12 +132,40 @@ public abstract class WheelOfFortune extends Game {
     @Override
     public abstract boolean playNext() ;
 
+    /**
+     * Abstract method to get a player's guess.
+     * @param previousGuesses A string containing the player's previous guesses.
+     * @return The player's guess.
+     */
     public abstract char getGuess(String previousGuesses);
 
+    /**
+     * Reset the game state.
+     */
     public void reset(){
         currentPhrase = "";
         chance = 0;
         previousGuesses = "";
         hidden = new StringBuilder();
+    }
+
+    @Override
+    public String toString() {
+        return "WheelOfFortune{" +
+                "phraseList=" + phraseList +
+                ", hidden=" + hidden +
+                ", previousGuesses='" + previousGuesses + '\'' +
+                ", chance=" + chance +
+                ", totalChances=" + totalChances +
+                ", currentPhrase='" + currentPhrase + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WheelOfFortune that = (WheelOfFortune) o;
+        return chance == that.chance && totalChances == that.totalChances && Objects.equals(phraseList, that.phraseList) && Objects.equals(hidden, that.hidden) && Objects.equals(previousGuesses, that.previousGuesses) && Objects.equals(currentPhrase, that.currentPhrase);
     }
 }

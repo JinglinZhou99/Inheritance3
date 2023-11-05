@@ -1,4 +1,8 @@
 import java.util.Random;
+
+/**
+ * A concrete implementation of the WheelOfFortunePlayer interface representing a random AI player.
+ */
 public class RandomAIPlayer implements WheelOfFortunePlayer{
     @Override
     public char nextGuess() {
@@ -13,7 +17,13 @@ public class RandomAIPlayer implements WheelOfFortunePlayer{
         return "RandomAI";
     }
 
+    // Reset any necessary state or data for the player if needed
     @Override
     public void reset() {
+    }
+
+    @Override
+    public String toString() {
+        return "RandomAIPlayer{}";
     }
 }
